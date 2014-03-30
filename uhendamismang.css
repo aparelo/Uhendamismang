@@ -1,0 +1,67 @@
+
+#vasakpool {
+	width: 20%;
+	margin-left: 25%;
+	float: left;
+	margin-top: 100px;
+}
+
+#parempool {
+	width: 25%;
+	margin-left: 5%;
+	margin-right: 15%;
+	margin-top: 100px;
+	float: right;
+}
+
+.kastvale {
+	margin: 30px;
+	background-color: #469CA1;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	border-radius: 15px;
+	font-size: 1.3em;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.kastvalitud {
+	margin: 30px;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	border-radius: 15px;
+	background-color: #FFD22E;
+	font-size: 1.3em;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.kastoige {
+	background-color: green;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	border-radius: 15px;
+	margin: 30px;
+	text-align: center;
+	font-size: 1.3em;
+	vertical-align: middle;
+}
+
+#uuesti {
+	font-size: 1.25em;
+	background-color: #469CA1;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	border-radius: 15px;
+	margin-left: 40%;
+	margin-right: 40%;
+	border: 0;
+}
