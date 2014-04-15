@@ -3,7 +3,8 @@
 
 $('document').ready(function() {
 
-	var valitud = 0;
+	var valitud_1 = 0;
+	var valitud_2 = 0;
 	var muuda = 0;
 	var valiktehtud = 0;
 	var punktid = 0;
@@ -19,7 +20,8 @@ $('document').ready(function() {
 		$('.kastvasak').each(function(){
 			kastide_arv++;
 		});
-		if(teine - kastide_arv == esimene) {
+		var temp = teine - kastide_arv;
+		if(temp == esimene) {
 			return true;
 		}
 		else {
@@ -27,57 +29,91 @@ $('document').ready(function() {
 		}
 	}
 
+
+
 	$('.kastvale').click(function() {
-		if(valiktehtud == 0) {
-			valitud = parseInt($(this).attr('id'));
-			if( jQuery.inArray(valitud, vasak_pool) > -1 ) {
+		if(valiktehtud == 0) {  //esimene kast mis valiti?
+			valitud_1 = parseInt($(this).attr('id'));
+			valitud_1_ID = '#' + valitud_1;
+
+			if( jQuery.inArray(valitud_1, vasak_pool) > -1 ) { //vasak pool?
 				pool = 'vasak';
+				$(this).removeClass('kastvale').addClass('kastvalitud');
+				valiktehtud = 1;
 			}
-			else {
+
+			else { //parem pool?
 				pool = 'parem';
+				$(this).removeClass('kastvale').addClass('kastvalitud');
+				valiktehtud = 1;
 			}
-			$(this).removeClass('kastvale').addClass('kastvalitud');
-			valiktehtud++;
+			
 			
 		}
-		else {
-			$(this).removeClass('kastvalitud').addClass('kastvale');
-		}
-	});// end function Vasak click
+		else if(valiktehtud !== 0) { //Teine kast mis valiti?
+			valitud_2 = parseInt($(this).attr('id'));
+			valitud_2_ID = '#' + valitud_2;
 
-	$('.kastvale').click(function() {
-		valitud = parseInt($(this).attr('id'));
-		if( jQuery.inArray(valitud, vasak_pool) > -1 ) {
+			if (jQuery.inArray(valitud_2, vasak_pool) > -1) { //vasak pool?
 				uus_pool = 'vasak';
-			}
-			else {
-				uus_pool = 'parem';
-			}
-		if (uus_pool == pool) {
-			$(this).removeClass('kastvalitud').addClass('kastvale');
-		}
 
-		else if (valitud == $(this).attr('id')) {
-			muuda = '#' + valitud
-			$(muuda).removeClass('kastvale').addClass('kastoige');
-			$(this).removeClass('kastvale').addClass('kastoige');
-			punktid++;
-			if (punktid == 6) {
-				alert("Ülesanne sooritatud, Palju õnne!");
-				punktid = 0;
-				};
-			valiktehtud = 0;
-			valitud = 0;
-			
+				if(uus_pool == pool) { //sama eelmisega?
+				 $(valitud_1_ID).removeClass('kastvalitud').addClass('kastvale');
+				 $(valitud_2_ID).removeClass('kastvale').addClass('kastvalitud');
+				 valiktehtud = 1;
+				 valitud_1 = parseInt($(this).attr('id'));
+				 valitud_1_ID = '#' + valitud_1;
+				 valitud_1_ID = valitud_2_ID;
+				}
+
+				else { //ei ole sama eelmise poolega
+					var oige = Matchup(valitud_2, valitud_1);
+					if(oige == true) { //Sobivad?
+						$(valitud_2_ID).removeClass('kastvalitud').addClass('kastoige');
+				 		$(valitud_1_ID).removeClass('kastvale').addClass('kastoige');
+				 		valiktehtud = 0;
+					}
+
+					else { //Ei sobi?
+						$(valitud_1_ID).removeClass('kastvalitud').addClass('kastvale');
+						valiktehtud = 0;
+					}
+
+				}
+			}
+
+
+			else { //parem pool?
+				uus_pool = 'parem';
+
+				if(uus_pool == pool) { //sama eelmisega?
+					$(valitud_1_ID).removeClass('kastvalitud').addClass('kastvale');
+					$(valitud_2_ID).removeClass('kastvale').addClass('kastvalitud');
+					valiktehtud = 1;
+					valitud_1 = parseInt($(this).attr('id'));
+					valitud_1_ID = '#' + valitud_1;
+					valitud_1_ID = valitud_2_ID;
+				}
+
+				else { //ei ole sama eelmsie poolega
+					var oige = Matchup(valitud_1, valitud_2);
+					if(oige == true) { //Sobivad?
+						$(valitud_1_ID).removeClass('kastvalitud').addClass('kastoige');
+				 		$(valitud_2_ID).removeClass('kastvale').addClass('kastoige');
+				 		valiktehtud = 0;
+					}
+
+					else { //Ei sobi?
+						$(valitud_1_ID).removeClass('kastvalitud').addClass('kastvale');
+						valiktehtud = 0;
+					}
+
+				}
+
+			}
+						
 		}
-		else {
-			muuda = '#' + valitud
-			alert("Valisid valesti!");
-			$(muuda).removeClass('kastvalitud').addClass('kastvale');
-			valitud = 0;
-			valiktehtud = 0;
-		}
-	});	//End function Kastparem click
+	});// end function click
 
 
 	$('#uuesti').click(function() {
@@ -88,6 +124,7 @@ $('document').ready(function() {
 
 		$('.kastvalitud').each(function(){
 			$(this).removeClass('kastvalitud').addClass('kastvale');
+			valiktehtud = 0;
 		});//end function
 	});	//end restart
 
